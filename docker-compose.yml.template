@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  front-dm-radar:
+    build:
+      context: .
+      dockerfile: ./docker/dev/node/Dockerfile
+    ports:
+      - "3000:3000"
+      - "9230:9230"
+      - "9229:9229"
+    volumes:
+      - ./src:/app
+    stdin_open: true
+    tty: true
