@@ -7,7 +7,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { SelectHTMLAttributes } from 'react';
+import { SelectHTMLAttributes, useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface Option {
@@ -33,15 +33,19 @@ export default function Select({
                                    className,
                                    placeholder = 'Select...',
                                }: SelectProps) {
+
+    const [optionValue, setOptionValue] = useState(value)
+
     return (
         <label className={className ?? 'flex flex-col min-w-40 flex-1'}>
             <p className="text-[#121417] text-base font-medium leading-normal pb-2">{label}</p>
             <ShadSelect
                 onValueChange={(value) => {
                     registration.onChange({ target: { name: registration.name, value } });
+                    setOptionValue(value)
                 }}
-                value={value}
-                defaultValue={registration.value}
+                value={optionValue}
+                defaultValue={optionValue}
             >
                 <SelectTrigger className="w-full">
                     <SelectValue placeholder={placeholder} />

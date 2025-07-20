@@ -1,7 +1,9 @@
+'use client';
+
 import React from "react";
 
 import { useSession } from "@/app/providers/SessionProvider";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
     DropdownMenu,
@@ -17,13 +19,13 @@ export default function Header() {
     const { user } = useSession();
     const [initials, setInitials] = useState('');
 
-    function capitalizeFirstLetter(str) {
-        if (str.length === 0) return '';  // Handle empty string
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    }
-
-    capitalizeFirstLetter(user)
-
+    useEffect(() => {
+        if (user?.data) {
+            const firstInitial = user.data.first_name?.charAt(0) || '';
+            const lastInitial = user.data.last_name?.charAt(0) || '';
+            setInitials((firstInitial + lastInitial).toUpperCase());
+        }
+    }, [user]);
 
     return (
         <header
@@ -80,8 +82,8 @@ export default function Header() {
                             className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
 
                         >
-                            <AvatarImage src="https://github.com/shadcn.png"/>
-                            <AvatarFallback>CN</AvatarFallback>
+                            <AvatarImage src={user?.data?.avatar}/>
+                            <AvatarFallback>{initials}</AvatarFallback>
                         </Avatar>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>

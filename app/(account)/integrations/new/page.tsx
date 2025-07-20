@@ -257,12 +257,11 @@ export default function NewIntegrationPage() {
 
                             </div>
                             <div className="flex max-w-[480px] flex-wrap items-end gap-4 py-3">
-
                                 <Select
                                     label="Tone"
-                                    options={toneSelectOptions}
                                     registration={register('tone')}
                                     error={errors.tone?.message}
+                                    options={toneSelectOptions}
                                 />
                             </div>
 
